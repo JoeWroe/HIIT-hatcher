@@ -7,5 +7,5 @@ public class Exercise {
 
     private Long id;
 
-    private String name;
+    private final String name;
 }
