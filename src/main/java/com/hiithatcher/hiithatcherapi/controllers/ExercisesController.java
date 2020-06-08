@@ -3,7 +3,6 @@ package com.hiithatcher.hiithatcherapi.controllers;
 import com.hiithatcher.hiithatcherapi.models.Exercise;
 import com.hiithatcher.hiithatcherapi.repositories.ExercisesRepository;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @RequestMapping("/api/exercises")
 public class ExercisesController {
 
-    @Autowired
-    private ExercisesRepository repository;
+    private final ExercisesRepository repository;
+
+    public ExercisesController(ExercisesRepository repository) {
+        this.repository = repository;
+    }
 
     // "/"
 
