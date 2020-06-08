@@ -10,5 +10,5 @@ HIIT-Hatcher API is a collection of ReST endpoints which expose underlying exerc
 
 ## Documentation
 
-   - [Architecture](architecture.md)
-   - [Local Development](local_development.md)
+   - [Architecture](documentation/architecture.md)
+   - [Local Development](documentation/local_development.md)
