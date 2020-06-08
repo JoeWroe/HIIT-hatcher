@@ -1,4 +1,4 @@
-package com.hiithatcher.hiithatcherapi.controllers;
+package com.hiithatcher.hiithatcherapi.unit.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,14 +15,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ExercisesController.class)
-class ExerciseControllerTest {
+class ExercisesControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
     @Test
     void shouldReturnAnExerciseWithTheGivenName() throws Exception {
-        mvc.perform(get("/api/exercise/push-up")
+        mvc.perform(get("/api/exercises/push-up")
         .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.name", is("push-up")));
