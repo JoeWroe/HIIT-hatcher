@@ -1,4 +1,4 @@
-package com.hiithatcher.hiithatcherapi.unit.controllers;
+package com.hiithatcher.hiithatcherapi.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

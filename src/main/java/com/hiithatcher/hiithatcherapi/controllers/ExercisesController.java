@@ -1,4 +1,4 @@
-package com.hiithatcher.hiithatcherapi.unit.controllers;
+package com.hiithatcher.hiithatcherapi.controllers;
 
 import com.hiithatcher.hiithatcherapi.models.Exercise;
 import com.hiithatcher.hiithatcherapi.repositories.ExercisesRepository;
