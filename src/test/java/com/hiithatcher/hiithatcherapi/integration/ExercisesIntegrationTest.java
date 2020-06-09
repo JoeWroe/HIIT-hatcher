@@ -30,4 +30,16 @@ public class ExercisesIntegrationTest {
 
         assertThat(exercisesRepository.findAll()).extracting("name").containsOnly("crunch");
     }
+
+    @Test
+    public void exercisesCanBeDeleted(@Autowired ExercisesRepository exercisesRepository) {
+        Exercise exerciseToDelete = Exercise.builder()
+            .name("crunch")
+            .build();
+        exercisesRepository.save(exerciseToDelete);
+
+        exercisesController.deleteExerciseByName("crunch");
+
+        assertThat(exercisesRepository.findAll()).isNullOrEmpty();
+    }
 }
