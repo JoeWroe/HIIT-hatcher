@@ -1,8 +1,9 @@
 package com.hiithatcher.hiithatcherapi.integration;
 
+import com.hiithatcher.hiithatcherapi.controllers.ExercisesController;
 import com.hiithatcher.hiithatcherapi.models.Exercise;
 import com.hiithatcher.hiithatcherapi.repositories.ExercisesRepository;
-import com.hiithatcher.hiithatcherapi.controllers.ExercisesController;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,32 +15,40 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
-@ComponentScan("com.hiithatcher.hiithatcherapi.controllers")
+@ComponentScan("com.hiithatcher.hiithatcherapi")
 public class ExercisesIntegrationTest {
 
     @Autowired
-    private ExercisesController exercisesController;
+    private ExercisesController controller;
+
+    @Autowired
+    private ExercisesRepository repository;
+
+    @AfterEach
+    void teardown() {
+        repository.deleteAll();
+    }
 
     @Test
-    public void newExercisesCanBeSaved(@Autowired ExercisesRepository exercisesRepository) {
+    public void newExercisesCanBeSaved() {
         Exercise exerciseToSave = Exercise.builder()
             .name("crunch")
             .build();
 
-        exercisesController.createExercise(exerciseToSave);
+        controller.createExercise(exerciseToSave);
 
-        assertThat(exercisesRepository.findAll()).extracting("name").containsOnly("crunch");
+        assertThat(repository.findAll()).extracting("name").containsOnly("crunch");
     }
 
     @Test
-    public void exercisesCanBeDeleted(@Autowired ExercisesRepository exercisesRepository) {
+    public void exercisesCanBeDeleted() {
         Exercise exerciseToDelete = Exercise.builder()
             .name("crunch")
             .build();
-        exercisesRepository.save(exerciseToDelete);
+        repository.save(exerciseToDelete);
 
-        exercisesController.deleteExerciseByName("crunch");
+        controller.deleteExerciseByName("crunch");
 
-        assertThat(exercisesRepository.findAll()).isNullOrEmpty();
+        assertThat(repository.findAll()).isNullOrEmpty();
     }
 }
