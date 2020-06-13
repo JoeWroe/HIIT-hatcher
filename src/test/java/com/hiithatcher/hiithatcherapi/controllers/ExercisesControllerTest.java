@@ -2,7 +2,6 @@ package com.hiithatcher.hiithatcherapi.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hiithatcher.hiithatcherapi.models.Exercise;
-import com.hiithatcher.hiithatcherapi.repositories.ExercisesRepository;
 import com.hiithatcher.hiithatcherapi.services.ExercisesService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,9 +34,6 @@ class ExercisesControllerTest {
 
     @MockBean
     private ExercisesService service;
-
-    @MockBean
-    private ExercisesRepository repository;
 
     Exercise crunch;
     Exercise squat;
