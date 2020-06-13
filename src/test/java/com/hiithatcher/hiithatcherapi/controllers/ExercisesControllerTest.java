@@ -55,13 +55,15 @@ class ExercisesControllerTest {
 
     @Test
     void shouldCreateAnExercise() throws Exception {
-        when(repository.save(crunch)).thenReturn(crunch);
+        when(service.createSingleExercise(crunch)).thenReturn(crunch);
 
         mvc.perform(post("/api/exercises/")
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(crunch)))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.name", is("crunch")));
+
+        verify(service, times(1)).createSingleExercise(crunch);
     }
 
     @Test
@@ -80,20 +82,24 @@ class ExercisesControllerTest {
 
     @Test
     void shouldReturnAnExerciseWithTheGivenName() throws Exception {
-        when(repository.findByName("crunch")).thenReturn(crunch);
+        when(service.readSingleExercise("crunch")).thenReturn(crunch);
 
         mvc.perform(get("/api/exercises/crunch")
         .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.name", is("crunch")));
+
+        verify(service, times(1)).readSingleExercise("crunch");
     }
 
     @Test
     void shouldDeleteAnExercise() throws Exception {
-        doNothing().when(repository).delete(crunch);
+        doNothing().when(service).deleteSingleExercise("crunch");
 
         mvc.perform(delete("/api/exercises/crunch")
         .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
+
+        verify(service, times(1)).deleteSingleExercise("crunch");
     }
 }

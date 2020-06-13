@@ -3,7 +3,6 @@ package com.hiithatcher.hiithatcherapi.controllers;
 import com.hiithatcher.hiithatcherapi.models.Exercise;
 import com.hiithatcher.hiithatcherapi.repositories.ExercisesRepository;
 import com.hiithatcher.hiithatcherapi.services.ExercisesService;
-import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +23,7 @@ public class ExercisesController {
 
     @PostMapping("/")
     public Exercise createExercise(@RequestBody Exercise exercise) {
-        exercise.set_id(ObjectId.get());
-        repository.save(exercise);
-        return exercise;
+        return service.createSingleExercise(exercise);
     }
 
     @GetMapping("/")
@@ -38,11 +35,11 @@ public class ExercisesController {
 
     @GetMapping("/{name}")
     public Exercise getExerciseByName(@PathVariable String name) {
-        return repository.findByName(name);
+        return service.readSingleExercise(name);
     }
 
     @DeleteMapping("/{name}")
     public void deleteExerciseByName(@PathVariable String name) {
-        repository.delete(repository.findByName(name));
+        service.deleteSingleExercise(name);
     }
 }
