@@ -41,6 +41,23 @@ public class ExercisesIntegrationTest {
     }
 
     @Test
+    public void allExercisesCanBeRead() {
+        Exercise crunch = Exercise.builder()
+            .name("crunch")
+            .build();
+
+        Exercise squat = Exercise.builder()
+            .name("squat")
+            .build();
+
+        repository.save(crunch);
+        repository.save(squat);
+
+        assertThat(controller.readAllExercises()).extracting("name").contains("crunch");
+        assertThat(controller.readAllExercises()).extracting("name").contains("squat");
+    }
+
+    @Test
     public void exercisesCanBeDeleted() {
         Exercise exerciseToDelete = Exercise.builder()
             .name("crunch")

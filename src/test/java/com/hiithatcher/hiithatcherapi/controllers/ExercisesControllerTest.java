@@ -3,6 +3,7 @@ package com.hiithatcher.hiithatcherapi.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hiithatcher.hiithatcherapi.models.Exercise;
 import com.hiithatcher.hiithatcherapi.repositories.ExercisesRepository;
+import com.hiithatcher.hiithatcherapi.services.ExercisesService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,8 +18,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,6 +32,9 @@ class ExercisesControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @MockBean
+    private ExercisesService service;
 
     @MockBean
     private ExercisesRepository repository;
@@ -63,7 +66,7 @@ class ExercisesControllerTest {
 
     @Test
     void shouldReturnAllExercises() throws Exception {
-        when(repository.findAll()).thenReturn(List.of(crunch, squat));
+        when(service.readAllExercises()).thenReturn(List.of(crunch, squat));
 
         mvc.perform(get("/api/exercises/")
         .contentType(MediaType.APPLICATION_JSON))
@@ -71,6 +74,8 @@ class ExercisesControllerTest {
             .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$[0].name", is("crunch")))
             .andExpect(jsonPath("$[1].name", is("squat")));
+
+        verify(service, times(1)).readAllExercises();
     }
 
     @Test
